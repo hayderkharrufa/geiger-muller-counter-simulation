@@ -11,39 +11,38 @@
 </head>
 <body>
   <header class="page-header">
-    <div class="page-header__text">
-      <h1>Geiger–Müller Counter Simulation</h1>
-    </div>
+    <h1 data-i18n="page.title">Geiger–Müller Counter Simulation</h1>
+    <button type="button" id="toggle-language" class="button" data-i18n="language.switch">العربية</button>
   </header>
 
   <main class="lab">
     <section class="panel controls" aria-labelledby="controls-heading">
-      <h2 id="controls-heading" class="visually-hidden">Experiment controls</h2>
+      <h2 id="controls-heading" class="visually-hidden" data-i18n="controls.heading">Experiment controls</h2>
 
       <div class="field">
-        <label for="source">Radiation source</label>
+        <label for="source" data-i18n="source.label">Radiation source</label>
         <select id="source">
-          <option value="none">None (background)</option>
-          <option value="barium">Ba-137m</option>
-          <option value="alpha">α radiation</option>
-          <option value="beta">β radiation</option>
-          <option value="gamma">γ radiation</option>
-          <option value="unknown">Unknown</option>
+          <option value="none" data-i18n="source.none">None (background)</option>
+          <option value="barium" data-i18n="source.barium">Ba-137m</option>
+          <option value="alpha" data-i18n="source.alpha">α radiation</option>
+          <option value="beta" data-i18n="source.beta">β radiation</option>
+          <option value="gamma" data-i18n="source.gamma">γ radiation</option>
+          <option value="unknown" data-i18n="source.unknown">Unknown</option>
         </select>
       </div>
 
       <div class="field">
-        <label for="barrier-type">Type of barrier</label>
+        <label for="barrier-type" data-i18n="barrier.label">Type of barrier</label>
         <select id="barrier-type">
-          <option value="none">None</option>
-          <option value="lead">Lead</option>
-          <option value="plastic">Plastic</option>
-          <option value="cardboard">Cardboard</option>
+          <option value="none" data-i18n="barrier.none">None</option>
+          <option value="lead" data-i18n="barrier.lead">Lead</option>
+          <option value="plastic" data-i18n="barrier.plastic">Plastic</option>
+          <option value="cardboard" data-i18n="barrier.cardboard">Cardboard</option>
         </select>
       </div>
 
       <div class="field">
-        <label for="barrier-count">Number of barriers</label>
+        <label for="barrier-count" data-i18n="barrierCount.label">Number of barriers</label>
         <select id="barrier-count" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -54,23 +53,23 @@
       </div>
 
       <div class="field">
-        <label for="duration">Count duration</label>
+        <label for="duration" data-i18n="duration.label">Count duration</label>
         <select id="duration">
-          <option value="10">10 seconds</option>
-          <option value="30">30 seconds</option>
-          <option value="60">1 minute</option>
+          <option value="10" data-i18n="duration.10">10 seconds</option>
+          <option value="30" data-i18n="duration.30">30 seconds</option>
+          <option value="60" data-i18n="duration.60">1 minute</option>
         </select>
       </div>
 
       <div class="buttons">
-        <button type="button" id="start-count" class="button button--primary">Start Count</button>
-        <button type="button" id="new-barium" class="button">New Ba-137 Source</button>
-        <button type="button" id="new-experiment" class="button">New Experiment</button>
+        <button type="button" id="start-count" class="button button--primary" data-i18n="button.startCount">Start Count</button>
+        <button type="button" id="new-barium" class="button" data-i18n="button.newBarium">New Ba-137 Source</button>
+        <button type="button" id="new-experiment" class="button" data-i18n="button.newExperiment">New Experiment</button>
         <button type="button" id="toggle-timer" class="button">Show Timer</button>
       </div>
 
       <div id="timer" class="timer" hidden>
-        <span class="timer__label">Timer</span>
+        <span class="timer__label" data-i18n="timer.label">Timer</span>
         <output id="timer-display" class="timer__display">00:00.0</output>
       </div>
 
@@ -79,25 +78,25 @@
 
       <label class="checkbox">
         <input type="checkbox" id="sound">
-        <span>Click sound for each count</span>
+        <span data-i18n="sound.label">Click sound for each count</span>
       </label>
     </section>
 
     <section class="panel apparatus-panel" aria-labelledby="apparatus-heading">
-      <h2 id="apparatus-heading" class="visually-hidden">Apparatus</h2>
-      <svg id="apparatus" class="apparatus" viewBox="0 0 360 384" role="img" aria-label="Radiation source below the barriers, with the Geiger–Müller tube above them, connected to a counter"></svg>
+      <h2 id="apparatus-heading" class="visually-hidden" data-i18n="apparatus.heading">Apparatus</h2>
+      <svg id="apparatus" class="apparatus" viewBox="0 0 360 384" role="img" data-i18n-aria-label="apparatus.description" aria-label="Radiation source below the barriers, with the Geiger–Müller tube above them, connected to a counter"></svg>
       <ul class="legend">
         <li><span class="swatch swatch--alpha"></span>α</li>
         <li><span class="swatch swatch--beta"></span>β</li>
         <li><span class="swatch swatch--gamma"></span>γ</li>
-        <li><span class="swatch swatch--unknown"></span><span>Unknown</span></li>
+        <li><span class="swatch swatch--unknown"></span><span data-i18n="legend.unknown">Unknown</span></li>
       </ul>
-      <p id="barium-age" class="barium-age" hidden>Time since Ba-137m source was prepared: <output id="barium-age-display">00:00</output></p>
+      <p id="barium-age" class="barium-age" hidden><span data-i18n="barium.age">Time since Ba-137m source was prepared:</span> <output id="barium-age-display">00:00</output></p>
     </section>
   </main>
 
   <footer class="page-footer">
-    <p><a href="https://github.com/hayderkharrufa/geiger-muller-counter-simulation">Source on GitHub</a></p>
+    <p><a href="https://github.com/hayderkharrufa/geiger-muller-counter-simulation" data-i18n="footer.source">Source on GitHub</a></p>
   </footer>
 </body>
 </html>

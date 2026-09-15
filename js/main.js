@@ -8,6 +8,7 @@ import {
   sheetTransmission,
 } from "./physics.js";
 import { createApparatusScene } from "./scene.js";
+import { initializeLanguage, onLanguageChange, toggleLanguage, translate } from "./i18n.js";
 
 const VISIBLE_PARTICLES_PER_SECOND = 14;
 const MAX_FRAME_SECONDS = 0.1;
@@ -29,6 +30,7 @@ const elements = {
   sound: document.getElementById("sound"),
   bariumAge: document.getElementById("barium-age"),
   bariumAgeDisplay: document.getElementById("barium-age-display"),
+  toggleLanguage: document.getElementById("toggle-language"),
 };
 
 const scene = createApparatusScene(document.getElementById("apparatus"));
@@ -38,6 +40,7 @@ const state = {
   bariumPreparedAt: performance.now(),
   activeCount: null,
   counts: 0,
+  statusMessage: null,
   timer: { phase: "hidden", startedAt: 0, stoppedSeconds: 0 },
   lastFrameAt: performance.now(),
 };
@@ -117,6 +120,33 @@ function playClick() {
   oscillator.stop(startTime + 0.02);
 }
 
+const TIMER_BUTTON_LABELS = {
+  hidden: "timer.show",
+  running: "timer.stop",
+  stopped: "timer.restart",
+};
+
+function renderTimerButton() {
+  elements.toggleTimer.textContent = translate(TIMER_BUTTON_LABELS[state.timer.phase]);
+}
+
+function renderStatus() {
+  const message = state.statusMessage;
+  elements.status.textContent = message ? translate(message.key, message.params) : "";
+}
+
+function showStatus(key, params) {
+  state.statusMessage = key ? { key, params } : null;
+  renderStatus();
+}
+
+function renderLanguage(language) {
+  elements.toggleLanguage.lang = language === "en" ? "ar" : "en";
+  scene.setCounterLabel(translate("apparatus.counts"));
+  renderTimerButton();
+  renderStatus();
+}
+
 function setCounts(counts) {
   state.counts = counts;
   scene.setCounts(counts);
@@ -130,14 +160,14 @@ function startCount() {
     durationSeconds: Number(elements.duration.value),
   };
   setCounts(0);
-  elements.status.textContent = "Counting…";
+  showStatus("status.counting");
   refreshControlAvailability();
   if (elements.sound.checked) audioContext ??= new AudioContext();
 }
 
 function finishCount() {
   state.activeCount = null;
-  elements.status.textContent = `${state.counts} counts in ${elements.duration.selectedOptions[0].textContent}.`;
+  showStatus("status.finished", { counts: state.counts, duration: translate(`duration.${elements.duration.value}`) });
   refreshControlAvailability();
 }
 
@@ -171,31 +201,30 @@ function toggleTimer() {
   if (timer.phase === "running") {
     timer.stoppedSeconds = timerSeconds(now);
     timer.phase = "stopped";
-    elements.toggleTimer.textContent = "Restart Timer";
   } else {
     timer.startedAt = now;
     timer.phase = "running";
     elements.timer.hidden = false;
-    elements.toggleTimer.textContent = "Stop Timer";
   }
+  renderTimerButton();
 }
 
 function resetTimer() {
   state.timer = { phase: "hidden", startedAt: 0, stoppedSeconds: 0 };
   elements.timer.hidden = true;
-  elements.toggleTimer.textContent = "Show Timer";
+  renderTimerButton();
 }
 
 function prepareNewBariumSource() {
   state.bariumPreparedAt = performance.now();
-  elements.status.textContent = "New Ba-137m source prepared.";
+  showStatus("status.newBarium");
 }
 
 function startNewExperiment() {
   state.unknownRadiationType = pickUnknownRadiationType();
   setCounts(0);
   elements.progressBar.style.width = "0";
-  elements.status.textContent = "";
+  showStatus(null);
   resetTimer();
   refreshApparatus(performance.now());
 }
@@ -226,7 +255,10 @@ elements.startCount.addEventListener("click", startCount);
 elements.newBarium.addEventListener("click", prepareNewBariumSource);
 elements.newExperiment.addEventListener("click", startNewExperiment);
 elements.toggleTimer.addEventListener("click", toggleTimer);
+elements.toggleLanguage.addEventListener("click", toggleLanguage);
 
+onLanguageChange(renderLanguage);
+initializeLanguage();
 refreshControlAvailability();
 refreshApparatus(performance.now());
 requestAnimationFrame(animationFrame);

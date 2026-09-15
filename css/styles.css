@@ -93,6 +93,10 @@ body {
   padding-bottom: 16px;
 }
 
+.page-header .button {
+  flex-shrink: 0;
+}
+
 h1 {
   margin: 0;
   font-size: clamp(1.35rem, 3vw, 1.9rem);
@@ -363,6 +367,11 @@ select:disabled,
   fill: var(--counter-label);
   font-size: 11px;
   letter-spacing: 0.12em;
+}
+
+:lang(ar) .counter-label {
+  font-size: 13px;
+  letter-spacing: 0;
 }
 
 @media (max-width: 760px) {
