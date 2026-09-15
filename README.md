@@ -2,6 +2,8 @@
 
 A browser-based Geiger–Müller counter lab for studying how alpha, beta and gamma radiation pass through lead, plastic and cardboard barriers.
 
+https://hayderkharrufa.github.io/geiger-muller-counter-simulation/
+
 ## Run locally
 
 ```sh
