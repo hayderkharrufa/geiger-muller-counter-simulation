@@ -4,6 +4,8 @@ A browser-based Geiger–Müller counter lab for studying how alpha, beta and ga
 
 https://hayderkharrufa.github.io/geiger-muller-counter-simulation/
 
+![Screenshot](docs/screenshot.png)
+
 ## Run locally
 
 ```sh
